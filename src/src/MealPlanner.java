@@ -24,27 +24,4 @@ public class MealPlanner {
     }
 }
 
-// FoodJournal class to log and view daily meals.
-class FoodJournal {
-    private List<Recipe> loggedMeals;
 
-    public FoodJournal() {
-        loggedMeals = new ArrayList<>();
-    }
-
-    public void logMeal(Recipe recipe) {
-        loggedMeals.add(recipe);
-        System.out.println("Meal logged: " + recipe.getName());
-    }
-
-    public void viewJournal() {
-        if (loggedMeals.isEmpty()) {
-            System.out.println("No meals logged yet.");
-            return;
-        }
-        System.out.println("Food Journal:");
-        for (Recipe recipe : loggedMeals) {
-            System.out.println("- " + recipe.getName());
-        }
-    }
-}
