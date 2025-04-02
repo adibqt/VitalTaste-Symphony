@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,7 +64,9 @@ public class UserInterFace {
                 System.out.println("6. View Recipes");
                 System.out.println("7. Generate Meal Plan");
                 System.out.println("8. View Food Journal");
-                System.out.println("9. Logout");
+                System.out.println("9. Log Daily Calorie Intake");
+                System.out.println("10. View Daily Calorie Intake");
+                System.out.println("11. Logout");
                 System.out.print("Enter your choice: ");
 
                 int choice = Integer.parseInt(scanner.nextLine());
@@ -96,6 +99,14 @@ public class UserInterFace {
                     }
                     case 8 -> foodJournal.viewJournal(currentUser.getRecipes());
                     case 9 -> {
+                        System.out.print("Enter calories consumed today: ");
+                        int calories = Integer.parseInt(scanner.nextLine());
+                        currentUser.getCalorieTracker().logCalories(LocalDate.now(), calories);
+                        userManager.saveUsers();
+                        System.out.println("Calories logged successfully!");
+                    }
+                    case 10 -> currentUser.getCalorieTracker().displayCalories();
+                    case 11 -> {
                         currentUser = null;
                         System.out.println("Logged out.");
                     }

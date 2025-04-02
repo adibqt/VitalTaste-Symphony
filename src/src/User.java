@@ -1,3 +1,6 @@
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ public class User implements Serializable {
         this.height = height;
         this.weight = weight;
         this.recipes = new ArrayList<>();
-        this.calorieTracker = new DailyCalorieTracker();
+        this.calorieTracker = new DailyCalorieTracker(); // Ensure this is initialized
     }
 
     public String getUsername() {
@@ -51,5 +54,12 @@ public class User implements Serializable {
 
     public double calculateBMI() {
         return weight / (height * height);
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        if (calorieTracker == null) {
+            calorieTracker = new DailyCalorieTracker();
+        }
     }
 }
