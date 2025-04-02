@@ -27,7 +27,7 @@ public class UserManager {
         return null; // Invalid username or password
     }
 
-    private void saveUsers() {
+    public void saveUsers() { // Changed to public
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(users);
         } catch (IOException e) {

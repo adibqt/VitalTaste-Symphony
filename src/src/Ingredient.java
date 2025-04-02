@@ -1,4 +1,8 @@
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private int calories;
     private double protein;
@@ -38,4 +42,3 @@ public class Ingredient {
         return name + " (Calories: " + calories + ", Protein: " + protein + "g, Fats: " + fats + "g, Carbs: " + carbs + "g)";
     }
 }
-

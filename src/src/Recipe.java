@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private List<Ingredient> ingredients;
     private List<String> steps;
@@ -32,7 +35,6 @@ public class Recipe {
         return steps;
     }
 
-    // Returns the total nutritional values of the recipe.
     public String nutritionalAnalysis() {
         int totalCalories = 0;
         double totalProtein = 0, totalFats = 0, totalCarbs = 0;
