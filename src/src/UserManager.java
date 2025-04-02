@@ -1,14 +1,21 @@
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserManager {
     private Map<String, User> users = new HashMap<>();
+    private static final String FILE_PATH = "users.dat";
+
+    public UserManager() {
+        loadUsers();
+    }
 
     public boolean registerUser(String username, String password, double height, double weight) {
         if (users.containsKey(username)) {
             return false; // Username already exists
         }
         users.put(username, new User(username, password, height, weight));
+        saveUsers();
         return true;
     }
 
@@ -18,5 +25,21 @@ public class UserManager {
             return user;
         }
         return null; // Invalid username or password
+    }
+
+    private void saveUsers() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(users);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUsers() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            users = (Map<String, User>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
