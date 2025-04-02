@@ -87,7 +87,7 @@ public class UserInterFace {
                         System.out.println("Your BMI is: " + bmi);
 
                         MealPlanner planner = new MealPlanner(currentUser.getRecipes());
-                        List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi);
+                        List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi, currentUser.getWeight(), currentUser.getHeight(), scanner);
                         if (plan.isEmpty()) {
                             System.out.println("No recipe found.");
                         } else {
