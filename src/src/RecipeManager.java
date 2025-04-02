@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class RecipeManager {
     private List<Recipe> recipes = new ArrayList<>();
 
-    public void createRecipe(Scanner scanner, IngredientManager ingredientManager) {
+    public Recipe createRecipe(Scanner scanner, IngredientManager ingredientManager) {
         System.out.print("\nEnter the name of your new recipe: ");
         String recipeName = scanner.nextLine();
         Recipe recipe = new Recipe(recipeName);
@@ -35,11 +35,10 @@ public class RecipeManager {
 
         recipes.add(recipe);
         System.out.println("Recipe '" + recipeName + "' created successfully!");
+        return recipe;
     }
 
-    public List<Recipe> getRecipes() { return recipes; }
-
-    public void displayRecipes() {
+    public void displayRecipes(List<Recipe> recipes) {
         if (recipes.isEmpty()) {
             System.out.println("No recipes available.");
         } else {

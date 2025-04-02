@@ -66,17 +66,21 @@ public class UserInterFace {
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> ingredientManager.displayIngredients();
-                    case 2 -> recipeManager.createRecipe(scanner, ingredientManager);
-                    case 3 -> recipeManager.displayRecipes();
+                    case 2 -> {
+                        Recipe recipe = recipeManager.createRecipe(scanner, ingredientManager);
+                        currentUser.addRecipe(recipe);
+                        userManager.saveUsers();
+                    }
+                    case 3 -> recipeManager.displayRecipes(currentUser.getRecipes());
                     case 4 -> {
-                        if (recipeManager.getRecipes().isEmpty()) {
+                        if (currentUser.getRecipes().isEmpty()) {
                             System.out.println("No recipes available.");
                             break;
                         }
                         double bmi = currentUser.calculateBMI();
                         System.out.println("Your BMI is: " + bmi);
 
-                        MealPlanner planner = new MealPlanner(recipeManager.getRecipes());
+                        MealPlanner planner = new MealPlanner(currentUser.getRecipes());
                         List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi);
                         if (plan.isEmpty()) {
                             System.out.println("No recipe found.");
@@ -84,7 +88,7 @@ public class UserInterFace {
                             plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
                         }
                     }
-                    case 5 -> foodJournal.viewJournal(recipeManager.getRecipes());
+                    case 5 -> foodJournal.viewJournal(currentUser.getRecipes());
                     case 6 -> {
                         currentUser = null;
                         System.out.println("Logged out.");
