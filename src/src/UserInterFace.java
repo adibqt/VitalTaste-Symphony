@@ -30,11 +30,22 @@ public class UserInterFace {
                         System.out.println("No recipes available.");
                         break;
                     }
-                    System.out.print("Enter calorie target: ");
-                    int target = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Enter your height in meters: ");
+                    double height = Double.parseDouble(scanner.nextLine());
+                    System.out.print("Enter your weight in kilograms: ");
+                    double weight = Double.parseDouble(scanner.nextLine());
+
+                    User user = new User(height, weight);
+                    double bmi = user.calculateBMI();
+                    System.out.println("Your BMI is: " + bmi);
+
                     MealPlanner planner = new MealPlanner(recipeManager.getRecipes());
-                    List<Recipe> plan = planner.generateMealPlan(target);
-                    plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
+                    List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi);
+                    if (plan.isEmpty()) {
+                        System.out.println("No recipe found.");
+                    } else {
+                        plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
+                    }
                 }
                 case 5 -> foodJournal.logMeal(recipeManager.getRecipes().get(0)); // Simplified for demo
                 case 6 -> foodJournal.viewJournal();
