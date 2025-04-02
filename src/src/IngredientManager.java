@@ -1,12 +1,14 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class IngredientManager {
     private List<Ingredient> ingredients = new ArrayList<>();
+    private static final String FILE_PATH = "ingredients.dat";
 
     public IngredientManager() {
-        initializeIngredients();
+        loadIngredients();
     }
 
     private void initializeIngredients() {
@@ -41,6 +43,7 @@ public class IngredientManager {
         double carbs = Double.parseDouble(scanner.nextLine());
 
         ingredients.add(new Ingredient(name, calories, protein, fats, carbs));
+        saveIngredients();
         System.out.println("Ingredient added successfully!");
     }
 
@@ -70,6 +73,7 @@ public class IngredientManager {
             String carbs = scanner.nextLine();
             if (!carbs.isEmpty()) ingredient.setCarbs(Double.parseDouble(carbs));
 
+            saveIngredients();
             System.out.println("Ingredient updated successfully!");
         } else {
             System.out.println("Invalid choice.");
@@ -82,9 +86,26 @@ public class IngredientManager {
         int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < ingredients.size()) {
             ingredients.remove(index);
+            saveIngredients();
             System.out.println("Ingredient deleted successfully!");
         } else {
             System.out.println("Invalid choice.");
+        }
+    }
+
+    private void saveIngredients() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(ingredients);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadIngredients() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            ingredients = (List<Ingredient>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            initializeIngredients();
         }
     }
 }
