@@ -10,6 +10,7 @@ public class User implements Serializable {
     private double height; // in meters
     private double weight; // in kilograms
     private List<Recipe> recipes;
+    private DailyCalorieTracker calorieTracker;
 
     public User(String username, String password, double height, double weight) {
         this.username = username;
@@ -17,6 +18,7 @@ public class User implements Serializable {
         this.height = height;
         this.weight = weight;
         this.recipes = new ArrayList<>();
+        this.calorieTracker = new DailyCalorieTracker();
     }
 
     public String getUsername() {
@@ -37,6 +39,10 @@ public class User implements Serializable {
 
     public List<Recipe> getRecipes() {
         return recipes;
+    }
+
+    public DailyCalorieTracker getCalorieTracker() {
+        return calorieTracker;
     }
 
     public void addRecipe(Recipe recipe) {
