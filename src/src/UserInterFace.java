@@ -99,11 +99,23 @@ public class UserInterFace {
                     }
                     case 8 -> foodJournal.viewJournal(currentUser.getRecipes());
                     case 9 -> {
-                        System.out.print("Enter calories consumed today: ");
-                        int calories = Integer.parseInt(scanner.nextLine());
-                        currentUser.getCalorieTracker().logCalories(LocalDate.now(), calories);
-                        userManager.saveUsers();
-                        System.out.println("Calories logged successfully!");
+                        boolean validInput = false;
+                        while (!validInput) {
+                            try {
+                                System.out.print("Enter calories consumed today: ");
+                                int calories = Integer.parseInt(scanner.nextLine());
+                                if (calories < 0) {
+                                    System.out.println("Calories cannot be negative. Please enter a valid number.");
+                                } else {
+                                    currentUser.getCalorieTracker().logCalories(LocalDate.now(), calories);
+                                    userManager.saveUsers();
+                                    System.out.println("Calories logged successfully!");
+                                    validInput = true;
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                            }
+                        }
                     }
                     case 10 -> currentUser.getCalorieTracker().displayCalories();
                     case 11 -> {
