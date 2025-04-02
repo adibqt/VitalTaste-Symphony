@@ -59,9 +59,8 @@ public class UserInterFace {
                 System.out.println("2. Create Recipe");
                 System.out.println("3. View Recipes");
                 System.out.println("4. Generate Meal Plan");
-                System.out.println("5. Log a Meal");
-                System.out.println("6. View Food Journal");
-                System.out.println("7. Logout");
+                System.out.println("5. View Food Journal");
+                System.out.println("6. Logout");
                 System.out.print("Enter your choice: ");
 
                 int choice = Integer.parseInt(scanner.nextLine());
@@ -85,9 +84,8 @@ public class UserInterFace {
                             plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
                         }
                     }
-                    case 5 -> foodJournal.logMeal(recipeManager.getRecipes().get(0)); // Simplified for demo
-                    case 6 -> foodJournal.viewJournal();
-                    case 7 -> {
+                    case 5 -> foodJournal.viewJournal(recipeManager.getRecipes());
+                    case 6 -> {
                         currentUser = null;
                         System.out.println("Logged out.");
                     }
