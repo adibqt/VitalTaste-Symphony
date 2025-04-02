@@ -11,6 +11,9 @@ public class User {
         this.weight = weight;
     }
 
+    public User(double height, double weight) {
+    }
+
     public String getUsername() {
         return username;
     }
