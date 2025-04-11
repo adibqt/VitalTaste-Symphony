@@ -106,11 +106,11 @@ public class UserInterFace {
 
                         MealPlanner planner = new MealPlanner(currentUser.getRecipes());
                         List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi, currentUser.getWeight(), currentUser.getHeight(), scanner);
-                        if (plan.isEmpty()) {
+                        /*if (plan.isEmpty()) {
                             System.out.println("No recipe found.");
                         } else {
                             plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
-                        }
+                        }*/
                     }
                     case 5 -> foodJournal.viewJournal(currentUser.getRecipes());
                     case 6 -> {

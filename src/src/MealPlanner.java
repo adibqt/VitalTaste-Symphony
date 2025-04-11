@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class MealPlanner {
     private List<Recipe> recipes;
@@ -30,20 +27,28 @@ public class MealPlanner {
             calorieTarget = (int) (2000 - (weightLoss * 7700) / (months * 30)); // 7700 calories to lose 1 kg
         }
 
-        int currentCalories = 0;
-        Random random = new Random();
-        List<Recipe> shuffledRecipes = new ArrayList<>(recipes);
-        while (currentCalories < calorieTarget && !shuffledRecipes.isEmpty()) {
-            Recipe recipe = shuffledRecipes.remove(random.nextInt(shuffledRecipes.size()));
+        System.out.println("Your daily calorie target is: " + calorieTarget + " calories.");
+
+        // Use a Set to ensure unique recipes in the plan
+        Set<Recipe> uniquePlan = new HashSet<>();
+
+        // Filter recipes that match the calorie target
+        for (Recipe recipe : recipes) {
             int recipeCalories = recipe.getIngredients().stream().mapToInt(Ingredient::getCalories).sum();
-            if (currentCalories + recipeCalories <= calorieTarget) {
-                plan.add(recipe);
-                currentCalories += recipeCalories;
+            if (recipeCalories <= calorieTarget) {
+                uniquePlan.add(recipe); // Add to Set to ensure uniqueness
             }
         }
 
+        plan.addAll(uniquePlan); // Convert Set back to List
+
         if (plan.isEmpty()) {
-            System.out.println("No recipe found.");
+            System.out.println("No recipes match your daily calorie target.");
+        } else {
+            System.out.println("Recipes matching your daily calorie target:");
+            for (Recipe recipe : plan) {
+                System.out.println("- " + recipe.getName() + " (" + recipe.nutritionalAnalysis() + ")");
+            }
         }
 
         return plan;
