@@ -57,13 +57,12 @@ public class UserInterFace {
                 }
             } else {
                 System.out.println("1. Manage Ingredients");
-                System.out.println("2. Create Recipe");
-                System.out.println("3. View Recipes");
-                System.out.println("4. Generate Meal Plan");
-                System.out.println("5. View Food Journal");
-                System.out.println("6. Log Daily Calorie Intake");
-                System.out.println("7. View Daily Calorie Intake");
-                System.out.println("8. Logout");
+                System.out.println("2. Manage Recipes");
+                System.out.println("3. Generate Meal Plan");
+                System.out.println("4. View Food Journal");
+                System.out.println("5. Log Daily Calorie Intake");
+                System.out.println("6. View Daily Calorie Intake");
+                System.out.println("7. Logout");
                 System.out.print("Enter your choice: ");
 
                 int choice = Integer.parseInt(scanner.nextLine());
@@ -91,12 +90,29 @@ public class UserInterFace {
                         }
                     }
                     case 2 -> {
-                        Recipe recipe = recipeManager.createRecipe(scanner, ingredientManager);
-                        currentUser.addRecipe(recipe);
-                        userManager.saveUsers();
+                        boolean managingRecipes = true;
+                        while (managingRecipes) {
+                            System.out.println("\n--- Manage Recipes ---");
+                            System.out.println("1. Create Recipe");
+                            System.out.println("2. View Recipes");
+                            System.out.println("3. Back to Main Menu");
+                            System.out.print("Enter your choice: ");
+
+                            int manageRecipeChoice = Integer.parseInt(scanner.nextLine());
+                            switch (manageRecipeChoice) {
+                                case 1 -> {
+                                    Recipe recipe = recipeManager.createRecipe(scanner, ingredientManager);
+                                    currentUser.addRecipe(recipe);
+                                    userManager.saveUsers();
+                                }
+                                case 2 -> recipeManager.displayRecipes(currentUser.getRecipes());
+                                case 3 -> managingRecipes = false;
+                                default -> System.out.println("Invalid choice.");
+                            }
+                        }
                     }
-                    case 3 -> recipeManager.displayRecipes(currentUser.getRecipes());
-                    case 4 -> {
+
+                    case 3 -> {
                         if (currentUser.getRecipes().isEmpty()) {
                             System.out.println("No recipes available.");
                             break;
@@ -112,8 +128,8 @@ public class UserInterFace {
                             plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
                         }*/
                     }
-                    case 5 -> foodJournal.viewJournal(currentUser.getRecipes());
-                    case 6 -> {
+                    case 4 -> foodJournal.viewJournal(currentUser.getRecipes());
+                    case 5 -> {
                         boolean validInput = false;
                         while (!validInput) {
                             try {
@@ -132,8 +148,8 @@ public class UserInterFace {
                             }
                         }
                     }
-                    case 7 -> currentUser.getCalorieTracker().displayCalories();
-                    case 8 -> {
+                    case 6 -> currentUser.getCalorieTracker().displayCalories();
+                    case 7 -> {
                         currentUser = null;
                         System.out.println("Logged out.");
                     }
