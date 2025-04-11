@@ -1,3 +1,10 @@
+package main;
+
+import interfaces.*;
+import model.User;
+import model.Recipe;
+import service.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -5,10 +12,10 @@ import java.util.Scanner;
 public class UserInterFace {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        IngredientManager ingredientManager = new IngredientManager();
-        RecipeManager recipeManager = new RecipeManager();
-        FoodJournal foodJournal = new FoodJournal();
-        UserManager userManager = new UserManager();
+        IIngredientManager ingredientManager = new IngredientManager();
+        IRecipeManager recipeManager = new RecipeManager();
+        IFoodJournal foodJournal = new FoodJournal();
+        IUserManager userManager = new UserManager();
         User currentUser = null;
 
         boolean running = true;
@@ -111,7 +118,6 @@ public class UserInterFace {
                             }
                         }
                     }
-
                     case 3 -> {
                         if (currentUser.getRecipes().isEmpty()) {
                             System.out.println("No recipes available.");
@@ -119,14 +125,8 @@ public class UserInterFace {
                         }
                         double bmi = currentUser.calculateBMI();
                         System.out.println("Your BMI is: " + bmi);
-
-                        MealPlanner planner = new MealPlanner(currentUser.getRecipes());
-                        List<Recipe> plan = planner.generateMealPlanBasedOnBMI(bmi, currentUser.getWeight(), currentUser.getHeight(), scanner);
-                        /*if (plan.isEmpty()) {
-                            System.out.println("No recipe found.");
-                        } else {
-                            plan.forEach(r -> System.out.println("- " + r.getName() + " (" + r.nutritionalAnalysis() + ")"));
-                        }*/
+                        IMealPlanner planner = new MealPlanner(currentUser.getRecipes());
+                        planner.generateMealPlanBasedOnBMI(bmi, currentUser.getWeight(), currentUser.getHeight(), scanner);
                     }
                     case 4 -> foodJournal.viewJournal(currentUser.getRecipes());
                     case 5 -> {

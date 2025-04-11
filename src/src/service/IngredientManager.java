@@ -1,9 +1,14 @@
+package service;
+
+import interfaces.IIngredientManager;
+import model.Ingredient;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class IngredientManager {
+public class IngredientManager implements IIngredientManager {
     private List<Ingredient> ingredients = new ArrayList<>();
     private static final String FILE_PATH = "ingredients.dat";
 
@@ -19,10 +24,12 @@ public class IngredientManager {
         ingredients.add(new Ingredient("Almonds", 575, 21, 49, 22));
     }
 
+    @Override
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
+    @Override
     public void displayIngredients() {
         System.out.println("\n--- Available Ingredients ---");
         for (int i = 0; i < ingredients.size(); i++) {
@@ -30,6 +37,7 @@ public class IngredientManager {
         }
     }
 
+    @Override
     public void addIngredient(Scanner scanner) {
         System.out.print("Enter ingredient name: ");
         String name = scanner.nextLine();
@@ -47,6 +55,7 @@ public class IngredientManager {
         System.out.println("Ingredient added successfully!");
     }
 
+    @Override
     public void editIngredient(Scanner scanner) {
         displayIngredients();
         System.out.print("Enter the number of the ingredient to edit: ");
@@ -80,6 +89,7 @@ public class IngredientManager {
         }
     }
 
+    @Override
     public void deleteIngredient(Scanner scanner) {
         displayIngredients();
         System.out.print("Enter the number of the ingredient to delete: ");
@@ -93,7 +103,8 @@ public class IngredientManager {
         }
     }
 
-    private void saveIngredients() {
+    @Override
+    public void saveIngredients() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(ingredients);
         } catch (IOException e) {
@@ -101,7 +112,8 @@ public class IngredientManager {
         }
     }
 
-    private void loadIngredients() {
+    @Override
+    public void loadIngredients() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             ingredients = (List<Ingredient>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {

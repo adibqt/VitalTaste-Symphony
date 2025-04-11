@@ -1,10 +1,11 @@
+package model;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private String name;
     private List<Ingredient> ingredients;
     private List<String> steps;
@@ -15,9 +16,7 @@ public class Recipe implements Serializable {
         this.steps = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);

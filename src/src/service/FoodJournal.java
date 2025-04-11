@@ -1,7 +1,14 @@
+package service;
+
+import interfaces.IFoodJournal;
+import model.Recipe;
+import model.Ingredient;
+
 import java.util.Formatter;
 import java.util.List;
 
-public class FoodJournal {
+public class FoodJournal implements IFoodJournal {
+    @Override
     public void viewJournal(List<Recipe> recipes) {
         if (recipes.isEmpty()) {
             System.out.println("No recipes available.");
@@ -32,12 +39,11 @@ public class FoodJournal {
             }
 
             String table = sb.toString();
-            int consoleWidth = 80; // Assuming a console width of 80 characters
-            int tableWidth = table.indexOf('\n') + 1; // Width of the table
-            int padding = (consoleWidth - tableWidth) / 2; // Calculate padding to center the table
-
+            int consoleWidth = 80;
+            int tableWidth = table.indexOf('\n') + 1;
+            int padding = (consoleWidth - tableWidth) / 2;
             String paddingSpaces = " ".repeat(Math.max(0, padding));
-            String centeredTable = table.replaceAll("(?m)^", paddingSpaces); // Add padding to each line
+            String centeredTable = table.replaceAll("(?m)^", paddingSpaces);
 
             System.out.println(centeredTable);
             formatter.close();

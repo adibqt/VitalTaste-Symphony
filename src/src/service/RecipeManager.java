@@ -1,11 +1,19 @@
+package service;
+
+import interfaces.IIngredientManager;
+import interfaces.IRecipeManager;
+import model.Ingredient;
+import model.Recipe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RecipeManager {
-    private List<Recipe> recipes = new ArrayList<>();
+public class RecipeManager implements IRecipeManager {
+    private final List<Recipe> recipes = new ArrayList<>();
 
-    public Recipe createRecipe(Scanner scanner, IngredientManager ingredientManager) {
+    @Override
+    public Recipe createRecipe(Scanner scanner, IIngredientManager ingredientManager) {
         System.out.print("\nEnter the name of your new recipe: ");
         String recipeName = scanner.nextLine();
         Recipe recipe = new Recipe(recipeName);
@@ -38,6 +46,7 @@ public class RecipeManager {
         return recipe;
     }
 
+    @Override
     public void displayRecipes(List<Recipe> recipes) {
         if (recipes.isEmpty()) {
             System.out.println("No recipes available.");
