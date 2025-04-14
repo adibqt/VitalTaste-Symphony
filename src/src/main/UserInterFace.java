@@ -20,7 +20,7 @@ public class UserInterFace {
 
         boolean running = true;
         while (running) {
-            System.out.println("\n=== HealthyFlavourFusion ===");
+            System.out.println("\n=== Vital-Taste Symphony ===");
             if (currentUser == null) {
                 System.out.println("1. Register");
                 System.out.println("2. Login");
